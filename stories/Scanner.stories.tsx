@@ -85,6 +85,10 @@ function Template(args: IScannerProps) {
                     deviceId: deviceId
                 }}
                 onScan={(detectedCodes) => {
+                    console.log({
+                        tag: detectedCodes[0].rawValue,
+                        format: detectedCodes[0].format
+                    });
                     action('onScan')(detectedCodes);
                 }}
                 onError={(error) => {
@@ -99,7 +103,7 @@ function Template(args: IScannerProps) {
                     tracker: getTracker()
                 }}
                 allowMultiple={true}
-                scanDelay={2000}
+                scanDelay={5000}
                 paused={pause}
             />
         </div>

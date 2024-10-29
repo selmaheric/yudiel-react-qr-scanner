@@ -25,7 +25,7 @@ export default function useScanner(props: IUseScannerProps) {
     const animationFrameIdRef = useRef<number | null>(null);
 
     useEffect(() => {
-        barcodeDetectorRef.current = new BarcodeDetector({ formats });
+        barcodeDetectorRef.current = new BarcodeDetector({ formats: ['qr_code'] });
     }, [formats]);
 
     useEffect(() => {
@@ -42,7 +42,7 @@ export default function useScanner(props: IUseScannerProps) {
                 if (timeNow - lastScan < retryDelay) {
                     animationFrameIdRef.current = window.requestAnimationFrame(processFrame(state));
                 } else {
-                    const detectedCodes = await barcodeDetectorRef.current.detect(videoElementRef.current);
+                    const detectedCodes = (await barcodeDetectorRef.current.detect(videoElementRef.current)).filter((d: DetectedBarcode) => d.format !== 'unknown');
 
                     const anyNewCodesDetected = detectedCodes.some((code: DetectedBarcode) => {
                         return !contentBefore.includes(code.rawValue);
