@@ -2,7 +2,7 @@ dist/
 node_modules/
 storybook-static/
 
-.idea
+# .idea
 
 .yarn/cache
 *storybook.log
